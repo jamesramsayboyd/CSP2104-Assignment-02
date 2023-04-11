@@ -1,0 +1,4 @@
+﻿  CSP2014-Assignment-02.cpp
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\CSP2014-Assignment-02.cpp(175,37): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\CSP2014-Assignment-02.cpp(206): warning C4715: 'SearchForWord': not all control paths return a value
+  CSP2014-Assignment-02.vcxproj -> C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\x64\Debug\CSP2014-Assignment-02.exe
