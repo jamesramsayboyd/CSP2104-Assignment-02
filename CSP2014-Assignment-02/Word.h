@@ -1,4 +1,6 @@
-#pragma once
+//#pragma once
+#ifndef WORD_H
+#define WORD_H
 
 #include <string>
 
@@ -35,3 +37,4 @@ public:
 	std::string getDefinition();
 	void setDefinition(std::string);
 };
+#endif

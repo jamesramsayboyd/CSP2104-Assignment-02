@@ -4,6 +4,7 @@
 #include <string>
 #include "Dictionary.h"
 #include "Word.h"
+#include "Utilities.h"
 
 // Default Constructor
 Dictionary::Dictionary() {}
@@ -14,13 +15,14 @@ void Dictionary::clear()
 	this->wordList.clear();
 }
 
-void Dictionary::loadFromFile(std::string filename)
+bool Dictionary::loadFromFile(std::string filename)
 {
 	this->clear();
 	std::fstream FileReader;
 	FileReader.open(filename, std::ios::in);
 	if (!FileReader) {
 		std::cout << "File not found" << std::endl;
+		return false;
 	}
 	else {
 		std::cout << "Loading file \"" << filename << "\"..." << std::endl;
@@ -35,15 +37,17 @@ void Dictionary::loadFromFile(std::string filename)
 				getline(FileReader, definition);
 				getline(FileReader, type);
 				Word newWord = Word(name, type, definition);
-				this->addWord(newWord);
+				//this->addWord(newWord);
+				wordList.push_back(newWord);
 			}
 		}
 		FileReader.close();
+		return true;
 	}
 }
 
 
-void Dictionary::saveToFile()
+bool Dictionary::saveToFile()
 {
 	std::string data;
 	std::cout << "Enter a filename to save the dictionary file (.txt format)" << std::endl;
@@ -53,89 +57,89 @@ void Dictionary::saveToFile()
 	std::fstream FileWriter;
 	FileWriter.open(saveFileName, std::ios::out);
 	if (!FileWriter) {
-		//return false;
+		return false;
 	}
 	else {
 		FileWriter << "2023-S1 dictionary contains " << this->getWordCount() << " words" << std::endl;
 		FileWriter << std::endl;
 
-		for (Word x : wordList)
+		for (Word word : wordList)
 		{
 			FileWriter << "<word>" << std::endl;
-			FileWriter << x.getName() << std::endl;
-			FileWriter << x.getType() << std::endl;
-			FileWriter << x.getDefinition() << std::endl;
+			FileWriter << word.getName() << std::endl;
+			FileWriter << word.getType() << std::endl;
+			FileWriter << word.getDefinition() << std::endl;
 			FileWriter << "</word>" << std::endl;
 		}
 
 		FileWriter.close();
 		std::cout << "File " << saveFileName << " saved" << std::endl;
-		//return true;
+		return true;
 	}
 }
 
 
-void Dictionary::addWord(Word wordToAdd)
+bool Dictionary::addWord(std::string wordToAdd)
 {
-	//if (SearchForWord(Dictionary, addWord) < 0)
-	//{
-	//	int wordTypeChoice;
-	//	string name, type, definition = "";
-	//	name = addWord;
+	if (this->searchWord(wordToAdd) >= 0)
+	{
+		int wordTypeChoice;
+		std::string name, type, definition = "";
+		name = wordToAdd;
 
-	//	const int MENU_SIZE = 8; // Eight options in this menu
-	//	cout << "Choose a word type:" << endl;
-	//	cout << "1: Noun  2: Verb  3: Adverb  4: Adjective  5: Preposition  6: Miscellaneous  7: Proper Noun  8: Noun and Verb" << endl;
+		const int MENU_SIZE = 8; // Eight options in this menu
+		std::cout << "Choose a word type:" << std::endl;
+		std::cout << "1: Noun  2: Verb  3: Adverb  4: Adjective  5: Preposition "  
+			"6: Miscellaneous  7: Proper Noun  8: Noun and Verb" << std::endl;
 
-	//	wordTypeChoice = CheckForValidIntInput(MENU_SIZE);
+		wordTypeChoice = CheckForValidIntInput(MENU_SIZE);
 
-	//	switch (wordTypeChoice)
-	//	{
-	//	case 1:
-	//		type = "n";
-	//		break;
-	//	case 2:
-	//		type = "v";
-	//		break;
-	//	case 3:
-	//		type = "adv";
-	//		break;
-	//	case 4:
-	//		type = "adj";
-	//		break;
-	//	case 5:
-	//		type = "prep";
-	//		break;
-	//	case 6:
-	//		type = "misc";
-	//		break;
-	//	case 7:
-	//		type = "pn";
-	//		break;
-	//	case 8:
-	//		type = "n_and_v";
-	//		break;
-	//	default:
-	//		break;
-	//	}
+		switch (wordTypeChoice)
+		{
+		case 1:
+			type = "n";
+			break;
+		case 2:
+			type = "v";
+			break;
+		case 3:
+			type = "adv";
+			break;
+		case 4:
+			type = "adj";
+			break;
+		case 5:
+			type = "prep";
+			break;
+		case 6:
+			type = "misc";
+			break;
+		case 7:
+			type = "pn";
+			break;
+		case 8:
+			type = "n_and_v";
+			break;
+		default:
+			break;
+		}
 
-	//	string tempDefinition = "";
-	//	cout << "Enter a definition:" << endl;
-	//	getline(cin, tempDefinition); // dummy getline() call to consume the trailing newline from the word type code above
-	//	getline(cin, tempDefinition);
-	//	definition = tempDefinition;
+		std::string tempDefinition = "";
+		std::cout << "Enter a definition:" << std::endl;
+		getline(std::cin, tempDefinition); // dummy getline() call to consume the trailing newline from the word type code above
+		getline(std::cin, tempDefinition);
+		definition = tempDefinition;
 
-	//	Word wordToAdd = Word(name, type, definition);
+		Word wordToAdd = Word(name, type, definition);
 
-	//	Dictionary->push_back(wordToAdd);
-	//	return true;
-	//}
-	//else
-	//{
-	//	cout << "ERROR: Word exists, elevated privileges required to edit existing words" << endl;
-	//	return false;
-	//}
-	wordList.push_back(wordToAdd);
+		wordList.push_back(wordToAdd);
+		return true;
+	}
+	else
+	{
+		std::cout << "ERROR: Word exists, elevated privileges required to edit existing words" << std::endl;
+		return false;
+	}
 }
 
 
@@ -166,10 +170,10 @@ int Dictionary::searchWord(std::string wordToSearch)
 
 void Dictionary::findThreeZs()
 {
-	for (Word x : wordList)
+	for (Word word : wordList)
 	{
 		int zCounter = 0;
-		for (char y : x.getName())
+		for (char y : word.getName())
 		{
 			if (y == 'z')
 			{
@@ -178,9 +182,35 @@ void Dictionary::findThreeZs()
 		}
 		if (zCounter > 2)
 		{
-			break; // TODO: Think about this break
-			x.printDefinition();
+			//break; // TODO: Think about this break
+			word.printDefinition();
 		}
+	}
+}
+
+
+// SETTERS & GETTERS
+void Dictionary::getWord(int index)
+{
+	if (index >= 0)
+	{
+		this->wordList[index].printWordNameOnly();
+	}
+	else
+	{
+		std::cout << "ERROR: Word not found" << std::endl;
+	}
+}
+
+void Dictionary::getFullWordDetails(int index)
+{
+	if (index >= 0)
+	{
+		this->wordList[index].printDefinition();
+	}
+	else
+	{
+		std::cout << "ERROR: Word not found" << std::endl;
 	}
 }
 
