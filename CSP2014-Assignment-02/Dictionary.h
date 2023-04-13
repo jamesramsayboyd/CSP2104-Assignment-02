@@ -7,11 +7,9 @@
 class Dictionary
 {
 private:
-	//static std::vector<Word> wordList;
+	std::vector<Word> wordList;
 
 public:
-	static std::vector<Word> wordList;
-
 	// Constructor
 	Dictionary();
 
@@ -20,9 +18,9 @@ public:
 	void loadFromFile(std::string);
 	void saveToFile();
 	void addWord(Word);
-	void deleteWord(Word);
-	Word searchWord(std::string);
-	Word findThreeZs();
+	void deleteWord(std::string);
+	int searchWord(std::string);
+	void findThreeZs();
 
 	// Setters and Getters
 	int getWordCount();

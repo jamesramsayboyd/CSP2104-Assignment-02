@@ -11,7 +11,7 @@ Dictionary::Dictionary() {}
 // Method Implementation
 void Dictionary::clear()
 {
-	wordList.clear();
+	this->wordList.clear();
 }
 
 void Dictionary::loadFromFile(std::string filename)
@@ -77,42 +77,114 @@ void Dictionary::saveToFile()
 
 void Dictionary::addWord(Word wordToAdd)
 {
+	//if (SearchForWord(Dictionary, addWord) < 0)
+	//{
+	//	int wordTypeChoice;
+	//	string name, type, definition = "";
+	//	name = addWord;
+
+	//	const int MENU_SIZE = 8; // Eight options in this menu
+	//	cout << "Choose a word type:" << endl;
+	//	cout << "1: Noun  2: Verb  3: Adverb  4: Adjective  5: Preposition  6: Miscellaneous  7: Proper Noun  8: Noun and Verb" << endl;
+
+	//	wordTypeChoice = CheckForValidIntInput(MENU_SIZE);
+
+	//	switch (wordTypeChoice)
+	//	{
+	//	case 1:
+	//		type = "n";
+	//		break;
+	//	case 2:
+	//		type = "v";
+	//		break;
+	//	case 3:
+	//		type = "adv";
+	//		break;
+	//	case 4:
+	//		type = "adj";
+	//		break;
+	//	case 5:
+	//		type = "prep";
+	//		break;
+	//	case 6:
+	//		type = "misc";
+	//		break;
+	//	case 7:
+	//		type = "pn";
+	//		break;
+	//	case 8:
+	//		type = "n_and_v";
+	//		break;
+	//	default:
+	//		break;
+	//	}
+
+	//	string tempDefinition = "";
+	//	cout << "Enter a definition:" << endl;
+	//	getline(cin, tempDefinition); // dummy getline() call to consume the trailing newline from the word type code above
+	//	getline(cin, tempDefinition);
+	//	definition = tempDefinition;
+
+	//	Word wordToAdd = Word(name, type, definition);
+
+	//	Dictionary->push_back(wordToAdd);
+	//	return true;
+	//}
+	//else
+	//{
+	//	cout << "ERROR: Word exists, elevated privileges required to edit existing words" << endl;
+	//	return false;
+	//}
 	wordList.push_back(wordToAdd);
-	//wordList.sort();
 }
 
 
-void Dictionary::deleteWord(Word wordToDelete)
+void Dictionary::deleteWord(std::string wordToDelete)
 {
-	//wordList.erase(wordToDelete); TODO: 
+	int deleteIndex = searchWord(wordToDelete);
+	if (deleteIndex >= 0)
+	{
+		wordList.erase(wordList.begin() + deleteIndex); // TODO: Consider changing searchWord to return vector iterator
+	}
+	else
+	{
+		std::cout << "Error" << std::endl;
+	}
 }
 
-Word Dictionary::searchWord(std::string)
+int Dictionary::searchWord(std::string wordToSearch)
 {
-	return Word("test", "test", "test");
+	for (int i = 0; i < getWordCount(); i++)
+	{
+		if (wordList[i].getName() == wordToSearch)
+		{
+			return i;
+		}
+	}
+	return -1;
 }
 
-Word Dictionary::findThreeZs()
+void Dictionary::findThreeZs()
 {
-	/*for (int i = 0; i < Dictionary->size(); i++)
+	for (Word x : wordList)
 	{
 		int zCounter = 0;
-		for (int j = 0; j < (*Dictionary)[i].getName().size(); j++)
+		for (char y : x.getName())
 		{
-			if ((*Dictionary)[i].getName()[j] == 'z')
+			if (y == 'z')
 			{
 				zCounter++;
 			}
 		}
 		if (zCounter > 2)
 		{
-			PrintWordDetails(Dictionary, i);
+			break; // TODO: Think about this break
+			x.printDefinition();
 		}
-	}*/
-	return Word("a", "b", "c");
+	}
 }
 
 int Dictionary::getWordCount()
 {
-	return wordList.size();
+	return this->wordList.size();
 }

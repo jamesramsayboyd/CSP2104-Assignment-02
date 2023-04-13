@@ -1,3 +1,3 @@
-﻿  CSP2014-Assignment-02.cpp
-Dictionary.obj : error LNK2001: unresolved external symbol "public: static class std::vector<class Word,class std::allocator<class Word> > Dictionary::wordList" (?wordList@Dictionary@@2V?$vector@VWord@@V?$allocator@VWord@@@std@@@std@@A)
-C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\x64\Debug\CSP2014-Assignment-02.exe : fatal error LNK1120: 1 unresolved externals
+﻿  Dictionary.cpp
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\Dictionary.cpp(189,30): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  CSP2014-Assignment-02.vcxproj -> C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\x64\Debug\CSP2014-Assignment-02.exe
