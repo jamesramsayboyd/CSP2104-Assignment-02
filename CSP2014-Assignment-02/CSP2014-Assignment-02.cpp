@@ -47,37 +47,37 @@ void PrintWordDetails(vector<Word>* Dictionary, int index)
 	else
 	{
 		Word word = (*Dictionary)[index];
-		cout << "Word: " << word.name << endl;
+		cout << "Word: " << word.getName() << endl;
 		cout << "Type: ";
-		if (word.type == "n")
+		if (word.getType() == "n")
 		{
 			cout << "[noun]" << endl;
 		}
-		else if (word.type == "v")
+		else if (word.getType() == "v")
 		{
 			cout << "[verb]" << endl;
 		}
-		else if (word.type == "adv")
+		else if (word.getType() == "adv")
 		{
 			cout << "[adverb]" << endl;
 		}
-		else if (word.type == "adj")
+		else if (word.getType() == "adj")
 		{
 			cout << "[adjective]" << endl;
 		}
-		else if (word.type == "prep")
+		else if (word.getType() == "prep")
 		{
 			cout << "[preposition]" << endl;
 		}
-		else if (word.type == "misc")
+		else if (word.getType() == "misc")
 		{
 			cout << "[miscellaneous]" << endl;
 		}
-		else if (word.type == "pn")
+		else if (word.getType() == "pn")
 		{
 			cout << "[proper noun]" << endl;
 		}
-		else if (word.type == "n_and_v")
+		else if (word.getType() == "n_and_v")
 		{
 			cout << "[noun and verb]" << endl;
 		}
@@ -85,7 +85,7 @@ void PrintWordDetails(vector<Word>* Dictionary, int index)
 		{
 			cout << "[unknown]" << endl;
 		}
-		cout << "Definition: " << word.definition << endl;
+		cout << "Definition: " << word.getDefinition() << endl;
 	}
 }
 
@@ -115,10 +115,11 @@ bool LoadDictionary(vector<Word>* Dictionary, string filename)
 			getline(FileReader, line);
 			if (line == "<word>") // FileReader object reads line by line until reaching the open <word> tag
 			{
-				Word newWord;
-				getline(FileReader, newWord.name);
-				getline(FileReader, newWord.definition);
-				getline(FileReader, newWord.type);
+				string name, type, definition = "";
+				getline(FileReader, name);
+				getline(FileReader, definition);
+				getline(FileReader, type);
+				Word newWord = Word(name, type, definition);
 				Dictionary->push_back(newWord);
 			}
 		}
@@ -149,9 +150,9 @@ bool SaveDictionaryToFile(vector<Word>* Dictionary)
 		for (int i = 0; i < Dictionary->size(); i++)
 		{
 			FileWriter << "<word>" << endl;
-			FileWriter << (*Dictionary)[i].name << endl;
-			FileWriter << (*Dictionary)[i].type << endl;
-			FileWriter << (*Dictionary)[i].definition << endl;
+			FileWriter << (*Dictionary)[i].getName() << endl;
+			FileWriter << (*Dictionary)[i].getType() << endl;
+			FileWriter << (*Dictionary)[i].getDefinition() << endl;
 			FileWriter << "</word>" << endl;
 		}
 		FileWriter.close();
@@ -167,42 +168,43 @@ is found, the word's information is printed to the console. The function returns
 index of the word if found, or -1 if not found. */
 int SearchForWord(vector<Word>* Dictionary, string targetWord)
 {
-	for (int i = 0; i < targetWord.length(); i++)
-	{
-		targetWord[i] = tolower(targetWord[i]); // Converting search target to all lower case for case-insensitive searches
-	}
-	int lowerBound = 0;
-	int upperBound = Dictionary->size();
-	int mid = 0;
-	bool found = false;
+	//for (int i = 0; i < targetWord.length(); i++)
+	//{
+	//	targetWord[i] = tolower(targetWord[i]); // Converting search target to all lower case for case-insensitive searches
+	//}
+	//int lowerBound = 0;
+	//int upperBound = Dictionary->size();
+	//int mid = 0;
+	//bool found = false;
 
-	while (lowerBound < upperBound)
-	{
-		mid = (upperBound + lowerBound) / 2;
-		string midWord = (*Dictionary)[mid].name;
-		if (!isalpha(midWord[0])) // Extra check needed because some words in the provided dictionary file start with a "-" character
-		{
-			midWord = midWord.substr(1, -1);
-		}
-		int comparison = (midWord.compare(targetWord));
-		if (comparison == 0)
-		{
-			return mid;
-		}
-		else if (comparison < 0)
-		{
-			lowerBound = mid + 1;
-		}
-		else
-		{
-			upperBound = mid;
-		}
-	}
+	//while (lowerBound < upperBound)
+	//{
+	//	mid = (upperBound + lowerBound) / 2;
+	//	string midWord = (*Dictionary)[mid].getName();
+	//	if (!isalpha(midWord[0])) // Extra check needed because some words in the provided dictionary file start with a "-" character
+	//	{
+	//		midWord = midWord.substr(1, -1);
+	//	}
+	//	int comparison = (midWord.compare(targetWord));
+	//	if (comparison == 0)
+	//	{
+	//		return mid;
+	//	}
+	//	else if (comparison < 0)
+	//	{
+	//		lowerBound = mid + 1;
+	//	}
+	//	else
+	//	{
+	//		upperBound = mid;
+	//	}
+	//}
 
-	if (!found)
-	{
-		return -1;
-	}
+	//if (!found)
+	//{
+	//	return -1;
+	//}
+	return 0;
 }
 
 /* James Boyd, Student ID: 10629572, 11/04/2023
@@ -214,9 +216,9 @@ void FindThreeZs(vector<Word>* Dictionary)
 	for (int i = 0; i < Dictionary->size(); i++)
 	{
 		int zCounter = 0;
-		for (int j = 0; j < (*Dictionary)[i].name.size(); j++)
+		for (int j = 0; j < (*Dictionary)[i].getName().size(); j++)
 		{
-			if ((*Dictionary)[i].name[j] == 'z')
+			if ((*Dictionary)[i].getName()[j] == 'z')
 			{
 				zCounter++;
 			}
@@ -238,8 +240,8 @@ bool AddWordToDictionary(vector<Word>* Dictionary, string addWord)
 	if (SearchForWord(Dictionary, addWord) < 0)
 	{
 		int wordTypeChoice;
-		Word wordToAdd;
-		wordToAdd.name = addWord;
+		string name, type, definition = "";
+		name = addWord;
 
 		const int MENU_SIZE = 8; // Eight options in this menu
 		cout << "Choose a word type:" << endl;
@@ -250,28 +252,28 @@ bool AddWordToDictionary(vector<Word>* Dictionary, string addWord)
 		switch (wordTypeChoice)
 		{
 		case 1:
-			wordToAdd.type = "n";
+			type = "n";
 			break;
 		case 2:
-			wordToAdd.type = "v";
+			type = "v";
 			break;
 		case 3:
-			wordToAdd.type = "adv";
+			type = "adv";
 			break;
 		case 4:
-			wordToAdd.type = "adj";
+			type = "adj";
 			break;
 		case 5:
-			wordToAdd.type = "prep";
+			type = "prep";
 			break;
 		case 6:
-			wordToAdd.type = "misc";
+			type = "misc";
 			break;
 		case 7:
-			wordToAdd.type = "pn";
+			type = "pn";
 			break;
 		case 8:
-			wordToAdd.type = "n_and_v";
+			type = "n_and_v";
 			break;
 		default:
 			break;
@@ -281,7 +283,9 @@ bool AddWordToDictionary(vector<Word>* Dictionary, string addWord)
 		cout << "Enter a definition:" << endl;
 		getline(cin, tempDefinition); // dummy getline() call to consume the trailing newline from the word type code above
 		getline(cin, tempDefinition);
-		wordToAdd.definition = tempDefinition;
+		definition = tempDefinition;
+
+		Word wordToAdd = Word(name, type, definition);
 
 		Dictionary->push_back(wordToAdd);
 		return true;
