@@ -67,8 +67,8 @@ bool Dictionary::saveToFile()
 		{
 			FileWriter << "<word>" << std::endl;
 			FileWriter << word.getName() << std::endl;
-			FileWriter << word.getType() << std::endl;
 			FileWriter << word.getDefinition() << std::endl;
+			FileWriter << word.getType() << std::endl;
 			FileWriter << "</word>" << std::endl;
 		}
 
@@ -81,7 +81,7 @@ bool Dictionary::saveToFile()
 
 bool Dictionary::addWord(std::string wordToAdd)
 {
-	if (this->searchWord(wordToAdd) >= 0)
+	if (this->searchWord(wordToAdd) < 0)
 	{
 		int wordTypeChoice;
 		std::string name, type, definition = "";

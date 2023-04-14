@@ -357,7 +357,7 @@ int main()
 				string targetWord;
 				cout << "Enter word:" << endl;
 				cin >> targetWord;
-				dictionary.getWord(dictionary.searchWord(targetWord));
+				dictionary.getFullWordDetails(dictionary.searchWord(targetWord));
 				break;
 			}
 			case 2: // Displays any/all words in the dictionary containing more than three 'z' characters
