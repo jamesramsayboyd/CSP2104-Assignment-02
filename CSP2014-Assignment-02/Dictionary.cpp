@@ -143,6 +143,12 @@ bool Dictionary::addWord(std::string wordToAdd)
 }
 
 
+void Dictionary::addWordObject(Word wordObject)
+{
+	wordList.push_back(wordObject);
+}
+
+
 void Dictionary::deleteWord(std::string wordToDelete)
 {
 	int deleteIndex = searchWord(wordToDelete);

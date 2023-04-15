@@ -101,6 +101,18 @@ bool Word::isPalindrome()
 	}
 }
 
+bool Word::containsSpecificLetter(char targetLetter)
+{
+	for (char x : name)
+	{
+		if (x == targetLetter)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 bool Word::guessFourthWordEligible()
 {
 	int spaceCounter = 0;
@@ -199,4 +211,15 @@ std::string Word::getFourthWordOfDefinition() // TODO: Working, but make it bett
 	defCopy = defCopy.substr(0, fourthWordEndIndex);
 	return defCopy;
 	//return definition.substr(fourthWordStartIndex, fourthWordEndIndex);
+}
+
+bool Word::getValidSearchdleAnswer()
+{
+	return validSearchdleAnswer;
+}
+
+
+void Word::setValidSearchdleAnswer(bool boolean)
+{
+	validSearchdleAnswer = boolean;
 }

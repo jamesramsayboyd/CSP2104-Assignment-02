@@ -402,6 +402,7 @@ int main()
 			}
 			case 7: // User chooses to cheat at Searchdle
 			{
+				dictionary.cheatAtSearchdle();
 				break;
 			}
 			case 8: // User can return to the initial menu to load a different dictionary file

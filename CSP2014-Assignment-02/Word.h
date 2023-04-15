@@ -19,6 +19,7 @@ class Word
 	// Properties
 private:
 	std::string name, type, definition;
+	bool validSearchdleAnswer = true;
 
 	// Method declaration
 public:
@@ -29,6 +30,7 @@ public:
 	void printDefinitionMinusFourthWord();
 	bool isPalindrome();
 	bool guessFourthWordEligible();
+	bool containsSpecificLetter(char);
 
 
 	// Setter/Getter method declaration
@@ -40,5 +42,7 @@ public:
 	void setDefinition(std::string);
 	std::string getLastThreeLetters();
 	std::string getFourthWordOfDefinition();
+	bool getValidSearchdleAnswer();
+	void setValidSearchdleAnswer(bool);
 };
 #endif

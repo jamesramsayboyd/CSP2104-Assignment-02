@@ -1,5 +1,6 @@
 #include <string>
 #include <random>
+#include <vector>
 #include "ExtendedDictionary.h"
 
 void ExtendedDictionary::displayPalindromes()
@@ -138,6 +139,80 @@ void ExtendedDictionary::playGuessTheFourthWord()
 
 void ExtendedDictionary::cheatAtSearchdle()
 {
+	std::vector<Word> possibleAnswers = wordList;
+	bool gameRunning = true;
+	std::cout << "Cheat at Searchdle" << std::endl;
+
+	while (gameRunning)
+	{
+		std::cout << "Press 1 to find the current word" << std::endl;
+		std::cout << "Press 2 to view Searchdle instructions" << std::endl;
+		std::cout << "Press 3 to exit the game" << std::endl;
+
+		int userChoice = checkForValidIntInput(3);
+
+		switch (userChoice)
+		{
+		case 1:
+		{
+			std::cout << "Number of words: " << possibleAnswers.size() << std::endl;
+			std::cout << "Enter all grey letters" << std::endl;
+			std::cin >> greyLetters;
+
+			/*for (int i = 0; i < possibleAnswers.size(); i++)
+			{
+				for (int j = 0; j < greyLetters.length(); j++)
+				{
+					if (!possibleAnswers[i].containsSpecificLetter(greyLetters[j]))
+					{
+						possibleAnswers.erase(possibleAnswers.begin() + i);
+					}
+				}
+			}*/
+
+			for (int i = 0; i < greyLetters.length(); i++)
+			{
+				for (int j = 0; j < possibleAnswers.size(); j++)
+				{
+					if (!possibleAnswers[j].containsSpecificLetter(greyLetters[i]))
+					{
+						possibleAnswers.erase(possibleAnswers.begin() + j);
+					}
+				}
+			}
+			std::cout << "Number of words: " << possibleAnswers.size() << std::endl;
+
+			std::cout << "Enter all yellow letters" << std::endl;
+			std::cin >> yellowLetters;
+
+			for (int i = 0; i < possibleAnswers.size(); i++)
+			{
+				for (char x : yellowLetters)
+				{
+					if (!possibleAnswers[i].containsSpecificLetter(x))
+					{
+						possibleAnswers.erase(possibleAnswers.begin() + i);
+					}
+				}
+			}
+			std::cout << "Number of words: " << possibleAnswers.size() << std::endl;
+			break;
+		}
+		case 2:
+		{
+			std::cout << "Searchdle gives you six chances to guess a randomly generated word. etc etc" << std::endl;
+			break;
+		}
+		case 3:
+		{
+			std::cout << "Returning to menu\n" << std::endl;
+			gameRunning = false;
+			break;
+		}
+		default:
+			break;
+		}
+	}
 
 }
 
