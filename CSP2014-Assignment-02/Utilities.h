@@ -3,8 +3,10 @@
 #define UTILITIES_H
 
 #include <iostream>
+#include <random>
 
-bool CheckMaxMinLimit(int, int);
-int CheckForValidIntInput(int);
+bool checkMaxMinLimit(int, int);
+int checkForValidIntInput(int);
+int generateRandomNumber(int);
 
 #endif

@@ -299,7 +299,7 @@ int main()
 			cout << "Press 3 to exit" << endl;
 			cout << endl;
 
-			userInput = CheckForValidIntInput(MENU_SIZE);
+			userInput = checkForValidIntInput(MENU_SIZE);
 
 			switch (userInput)
 			{
@@ -354,7 +354,7 @@ int main()
 			cout << "Press 9 to exit" << endl;
 			cout << endl;
 
-			userInput = CheckForValidIntInput(MENU_SIZE);
+			userInput = checkForValidIntInput(MENU_SIZE);
 
 			switch (userInput)
 			{
@@ -397,6 +397,7 @@ int main()
 			}
 			case 6: // User chooses to play "Guess The Fourth Word"
 			{
+				dictionary.playGuessTheFourthWord();
 				break;
 			}
 			case 7: // User chooses to cheat at Searchdle

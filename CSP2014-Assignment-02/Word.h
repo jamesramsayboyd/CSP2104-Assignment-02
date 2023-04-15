@@ -26,8 +26,10 @@ public:
 	Word(std::string, std::string, std::string); // Overloaded Constructor
 	void printWordNameOnly();
 	void printDefinition();
+	void printDefinitionMinusFourthWord();
 	bool isPalindrome();
 	bool guessFourthWordEligible();
+
 
 	// Setter/Getter method declaration
 	std::string getName();
@@ -37,5 +39,6 @@ public:
 	std::string getDefinition();
 	void setDefinition(std::string);
 	std::string getLastThreeLetters();
+	std::string getFourthWordOfDefinition();
 };
 #endif

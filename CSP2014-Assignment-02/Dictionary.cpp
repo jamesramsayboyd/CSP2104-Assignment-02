@@ -92,7 +92,7 @@ bool Dictionary::addWord(std::string wordToAdd)
 		std::cout << "1: Noun  2: Verb  3: Adverb  4: Adjective  5: Preposition "  
 			"6: Miscellaneous  7: Proper Noun  8: Noun and Verb" << std::endl;
 
-		wordTypeChoice = CheckForValidIntInput(MENU_SIZE);
+		wordTypeChoice = checkForValidIntInput(MENU_SIZE);
 
 		switch (wordTypeChoice)
 		{

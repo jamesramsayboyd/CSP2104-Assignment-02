@@ -60,6 +60,26 @@ void Word::printDefinition()
 	std::cout << "Definition: " << definition << std::endl;
 }
 
+
+void Word::printDefinitionMinusFourthWord() // TODO: Work on incrementing i once before doing '_'s
+{
+	int spaceCounter = 0;
+	int fourthWordStartIndex = 0;
+	int fourthWordEndIndex = 0;
+	for (int i = 0; i < definition.length(); i++)
+	{
+		if (definition[i] == ' ')
+		{
+			spaceCounter++;
+		}
+		if (spaceCounter > 2 && spaceCounter < 4)
+		{
+			definition[i] = '_';
+		}
+	}
+	std::cout << definition << std::endl;
+}
+
 // Predicate function identifying whether word is a palindrome, i.e. same spelt
 // backwards or forwards. Function operates by splitting the word into two substrings:
 // index 0 to middle letter (first half of word and index -1 to middle letter (second
@@ -83,14 +103,19 @@ bool Word::isPalindrome()
 
 bool Word::guessFourthWordEligible()
 {
-	if (definition.length() > 20) // TODO: if definition has more than 4 words
+	int spaceCounter = 0;
+	for (char x : definition)
 	{
-		return true;
+		if (x == ' ')
+		{
+			spaceCounter++;
+		}
+		if (spaceCounter > 3)
+		{
+			return true;
+		}
 	}
-	else
-	{
-		return false;
-	}
+	return false;
 }
 
 // Setter/Getter implementation
@@ -138,4 +163,40 @@ std::string Word::getLastThreeLetters()
 		std::string lastThreeLetters = name.substr(threeFromLast, wordLength);
 		return lastThreeLetters;
 	}
+}
+
+std::string Word::getFourthWordOfDefinition() // TODO: Working, but make it better
+{
+	int spaceCounter = 0;
+	int fourthWordStartIndex = 0;
+	int fourthWordEndIndex = 0;
+	for (int i = 0; i < definition.length(); i++)
+	{
+		if (definition[i] == ' ')
+		{
+			spaceCounter++;
+		}
+		if (spaceCounter == 3)
+		{
+			fourthWordStartIndex = i + 1;
+			break;
+		}
+	}
+	std::string defCopy = definition.substr(fourthWordStartIndex, definition.length());
+	spaceCounter = 0;
+	for (int i = 0; i < defCopy.length(); i++)
+	{
+		if (defCopy[i] == ' ')
+		{
+			spaceCounter++;
+		}
+		if (spaceCounter == 1)
+		{
+			fourthWordEndIndex = i;
+			break;
+		}
+	}
+	defCopy = defCopy.substr(0, fourthWordEndIndex);
+	return defCopy;
+	//return definition.substr(fourthWordStartIndex, fourthWordEndIndex);
 }
