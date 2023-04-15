@@ -368,7 +368,6 @@ int main()
 			}
 			case 2: // Displays any/all words in the dictionary containing more than three 'z' characters
 			{
-				cout << "Displaying all words containing more than three 'z' characters: " << endl;
 				dictionary.findThreeZs();
 				break;
 			}
@@ -390,6 +389,10 @@ int main()
 			}
 			case 5: // User chooses to find all words rhyming with an input word
 			{
+				string wordToRhyme;
+				cout << "Enter word to find all rhyming words:" << endl;
+				cin >> wordToRhyme;
+				dictionary.findRhymingWords(wordToRhyme);
 				break;
 			}
 			case 6: // User chooses to play "Guess The Fourth Word"

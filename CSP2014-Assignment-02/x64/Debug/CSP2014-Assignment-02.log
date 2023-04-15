@@ -1,3 +1,4 @@
-﻿  Word.cpp
-C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\Word.cpp(69,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+﻿  ExtendedDictionary.cpp
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\ExtendedDictionary.cpp(30,39): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\ExtendedDictionary.cpp(38,47): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   CSP2014-Assignment-02.vcxproj -> C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\x64\Debug\CSP2014-Assignment-02.exe

@@ -68,7 +68,7 @@ bool Word::isPalindrome()
 {
 	int midpoint = name.length() / 2;
 	std::string firstHalf = name.substr(0, midpoint);
-	std::string secondHalf = name.substr(midpoint, -1);
+	std::string secondHalf = name.substr(midpoint, name.length() + 1);
 	std::reverse(secondHalf.begin(), secondHalf.end());
 
 	if (firstHalf == secondHalf)
@@ -122,4 +122,20 @@ std::string Word::getDefinition()
 void Word::setDefinition(std::string definitionToSet)
 {
 	this->definition = definitionToSet;
+}
+
+std::string Word::getLastThreeLetters()
+{
+	std::string name = this->getName();
+	int wordLength = name.length();
+	if (wordLength < 3)
+	{
+		return this->name;
+	}
+	else
+	{
+		int threeFromLast = name.length() - 3;
+		std::string lastThreeLetters = name.substr(threeFromLast, wordLength);
+		return lastThreeLetters;
+	}
 }

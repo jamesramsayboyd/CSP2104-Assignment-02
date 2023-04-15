@@ -170,6 +170,7 @@ int Dictionary::searchWord(std::string wordToSearch)
 
 void Dictionary::findThreeZs()
 {
+	std::cout << "Displaying all words containing more than three 'z' characters: " << std::endl;
 	for (Word word : wordList)
 	{
 		int zCounter = 0;

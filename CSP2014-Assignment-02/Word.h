@@ -36,5 +36,6 @@ public:
 	void setType(std::string);
 	std::string getDefinition();
 	void setDefinition(std::string);
+	std::string getLastThreeLetters();
 };
 #endif
