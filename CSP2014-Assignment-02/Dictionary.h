@@ -9,7 +9,7 @@
 
 class Dictionary
 {
-private:
+protected:
 	std::vector<Word> wordList;
 
 public:

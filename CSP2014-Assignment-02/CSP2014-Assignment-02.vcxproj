@@ -129,11 +129,13 @@
   <ItemGroup>
     <ClCompile Include="CSP2014-Assignment-02.cpp" />
     <ClCompile Include="Dictionary.cpp" />
+    <ClCompile Include="ExtendedDictionary.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="Word.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dictionary.h" />
+    <ClInclude Include="ExtendedDictionary.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Word.h" />
   </ItemGroup>

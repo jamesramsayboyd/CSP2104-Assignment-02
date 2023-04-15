@@ -67,7 +67,11 @@ void Word::printDefinition()
 bool Word::isPalindrome()
 {
 	int midpoint = name.length() / 2;
-	if (name.substr(0, midpoint) == name.substr(-1, midpoint))
+	std::string firstHalf = name.substr(0, midpoint);
+	std::string secondHalf = name.substr(midpoint, -1);
+	std::reverse(secondHalf.begin(), secondHalf.end());
+
+	if (firstHalf == secondHalf)
 	{
 		return true;
 	}

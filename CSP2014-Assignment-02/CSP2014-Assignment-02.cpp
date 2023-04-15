@@ -4,6 +4,7 @@
 #include <string>
 //#include "Word.h"
 #include "Dictionary.h"
+#include "ExtendedDictionary.h"
 //#include "Utilities.h"
 
 using namespace std;
@@ -277,7 +278,8 @@ message is word already exists in dictionary. */
 
 int main()
 {
-	Dictionary dictionary = Dictionary();
+	//Dictionary dictionary = Dictionary();
+	ExtendedDictionary dictionary = ExtendedDictionary();
 	bool running = true; // A boolean tracking whether the program is running, updated to false when the user chooses to exit
 	bool fileLoaded = false; // A boolean tracking whether a .txt file has been loaded
 	int userInput = 0;
@@ -339,13 +341,17 @@ int main()
 
 		else
 		{
-			const int MENU_SIZE = 5; // Five options in this menu
+			const int MENU_SIZE = 9; // Five options in this menu
 			cout << endl;
 			cout << "Press 1 to search for a word" << endl;
 			cout << "Press 2 to find all words containing more than three 'z' characters" << endl;
 			cout << "Press 3 to add a word to the Dictionary" << endl;
-			cout << "Press 4 to load a different Dictionary file" << endl;
-			cout << "Press 5 to exit" << endl;
+			cout << "Press 4 to find all palindromes" << endl;
+			cout << "Press 5 to find rhyming words" << endl;
+			cout << "Press 6 to play \"Guess The Fourth Word\"" << endl;
+			cout << "Press 7 to cheat at Searchdle" << endl;
+			cout << "Press 8 to load a different Dictionary file" << endl;
+			cout << "Press 9 to exit" << endl;
 			cout << endl;
 
 			userInput = CheckForValidIntInput(MENU_SIZE);
@@ -377,14 +383,30 @@ int main()
 				}
 				break;
 			}
-			case 4: // User can return to the initial menu to load a different dictionary file
+			case 4: // User chooses to list all palindromes in the dictionary
+			{
+				dictionary.displayPalindromes();
+				break;
+			}
+			case 5: // User chooses to find all words rhyming with an input word
+			{
+				break;
+			}
+			case 6: // User chooses to play "Guess The Fourth Word"
+			{
+				break;
+			}
+			case 7: // User chooses to cheat at Searchdle
+			{
+				break;
+			}
+			case 8: // User can return to the initial menu to load a different dictionary file
 			{
 				fileLoaded = false;
 				break;
 			}
-			case 5: // User chooses to exit the program
+			case 9: // User chooses to exit
 			{
-				cout << "Goodbye" << endl;
 				running = false;
 				break;
 			}
