@@ -283,8 +283,8 @@ int main()
 	bool running = true; // A boolean tracking whether the program is running, updated to false when the user chooses to exit
 	bool fileLoaded = false; // A boolean tracking whether a .txt file has been loaded
 	int userInput = 0;
-	//const string DEFAULT_DICTIONARY_NAME = "dictionary_2023S1.txt"; // The .txt file provided for the assignment
-	const string DEFAULT_DICTIONARY_NAME = "dictionary_test.txt"; // The .txt file provided for the assignment
+	const string DEFAULT_DICTIONARY_NAME = "dictionary_2023S1.txt"; // The .txt file provided for the assignment
+	//const string DEFAULT_DICTIONARY_NAME = "dictionary_test.txt"; // The .txt file provided for the assignment
 
 	cout << "Welcome to the Dictionary" << endl;
 

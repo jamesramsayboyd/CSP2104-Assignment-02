@@ -8,6 +8,8 @@ class ExtendedDictionary :
 {
 private:
     int guessTheFourthWordHighScore = 0;
+    bool searchdleRunning = false;
+    bool answerFound = false;
     std::string greyLetters;
     std::string yellowLetters;
     std::string greenLetters;
@@ -17,11 +19,16 @@ public:
     void findRhymingWords(std::string);
     void playGuessTheFourthWord();
     void cheatAtSearchdle();
-    void trimSearchdleAnswerSize(int wordLength);
+    void trimSearchdleAnswerPool(int wordLength);
     void inputSearchdleGuess(int);
+    void checkSearchdleAnswer();
     void printSearchdleAnswer();
 
     int getGuessTheFourthWordHighScore();
     void setGuessTheFourthWordHighScore(int);
+    bool getSearchdleRunning();
+    void setSearchdleRunning(bool);
+    bool getAnswerFound();
+    void setAnswerFound(bool);
 };
 

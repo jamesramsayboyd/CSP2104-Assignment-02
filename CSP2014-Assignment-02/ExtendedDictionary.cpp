@@ -137,6 +137,8 @@ void ExtendedDictionary::playGuessTheFourthWord()
 	
 }
 
+
+#pragma region SEARCHDLE FUNCTIONS
 void ExtendedDictionary::cheatAtSearchdle()
 {
 	const int MAX_SEARCHDLE_GUESSES = 6;
@@ -171,19 +173,31 @@ void ExtendedDictionary::cheatAtSearchdle()
 					std::cout << "Guess #" << i + 1 << ":" << std::endl;
 					inputSearchdleGuess(wordLength);
 					std::cout << std::endl;
-					if (potentialSearchdleAnswers.size() == 1)
+					bool running = true;
+					while (running)
 					{
-						std::cout << "Answer found!" << std::endl;
-						potentialSearchdleAnswers[0].printWordNameOnly();
-						answerFound = true;
-						break;
+						std::cout << "1. Continue guessing  2. Ask for a hint  3. Exit" << std::endl;
+						int userChoice = checkForValidIntInput(3);
+						switch (userChoice)
+						{
+						case 1:
+						{
+							running = false;
+							break;
+						}
+						case 2:
+						{
+							int index = generateRandomNumber(potentialSearchdleAnswers.size());
+							std::cout << "Try \"" << potentialSearchdleAnswers[index].getName() << "\"" << std::endl;
+							break;
+						}
+						case 3:
+							std::cout << "Returning to menu" << std::endl;
+							gameRunning = false;
+							break;
+						}
 					}
-					else if (potentialSearchdleAnswers.size() == 0)
-					{
-						std::cout << "Sorry, could not find answer in dictionary" << std::endl;
-						answerFound = true;
-						break;
-					}
+					std::cout << std::endl;
 				}
 			}
 			break;
@@ -205,7 +219,7 @@ void ExtendedDictionary::cheatAtSearchdle()
 	}
 }
 
-void ExtendedDictionary::trimSearchdleAnswerSize(int wordLength)
+void ExtendedDictionary::trimSearchdleAnswerPool(int wordLength)
 {
 	std::vector<Word> temp;
 	for (int i = 0; i < wordList.size(); i++)
@@ -234,47 +248,44 @@ void ExtendedDictionary::inputSearchdleGuess(int wordLength)
 		{
 		case 1:
 		{
-			/*for (int j = 0; j < potentialSearchdleAnswers.size(); j++)
+			std::vector<Word> temp;
+			for (int j = 0; j < potentialSearchdleAnswers.size(); j++)
 			{
-				std::vector<Word> temp;
-				if (!potentialSearchdleAnswers[j].containsLetterAtIndex(letterChoice, i))
+				if (potentialSearchdleAnswers[j].containsLetterAtIndex(letterChoice, i))
 				{
 					temp.push_back(potentialSearchdleAnswers[j]);
 				}
-				potentialSearchdleAnswers = temp;
-			}*/
-			for (int j = potentialSearchdleAnswers.size() - 1; j >= 0; j--)
-			{
-				if (!potentialSearchdleAnswers[j].containsLetterAtIndex(letterChoice, i))
-				{
-					potentialSearchdleAnswers.erase(potentialSearchdleAnswers.begin() + j);
-				}
 			}
-			std::cout << "No. of potential answers: " << potentialSearchdleAnswers.size() << std::endl;
+			potentialSearchdleAnswers = temp;
+			checkSearchdleAnswer();
 			break;
 		}
 		case 2:
 		{
-			for (int j = potentialSearchdleAnswers.size() - 1; j >= 0; j--)
+			std::vector<Word> temp;
+			for (int j = 0; j < potentialSearchdleAnswers.size(); j++)
 			{
-				if (!potentialSearchdleAnswers[j].containsLetter(letterChoice))
+				if (!potentialSearchdleAnswers[j].containsLetterAtIndex(letterChoice, i))
 				{
-					potentialSearchdleAnswers.erase(potentialSearchdleAnswers.begin() + j);
+					temp.push_back(potentialSearchdleAnswers[j]);
 				}
 			}
-			std::cout << "No. of potential answers: " << potentialSearchdleAnswers.size() << std::endl;
+			potentialSearchdleAnswers = temp;
+			checkSearchdleAnswer();
 			break;
 		}
 		case 3:
 		{
-			for (int j = potentialSearchdleAnswers.size() - 1; j >= 0; j--)
+			std::vector<Word> temp;
+			for (int j = 0; j < potentialSearchdleAnswers.size(); j++)
 			{
-				if (potentialSearchdleAnswers[j].containsLetter(letterChoice))
+				if (!potentialSearchdleAnswers[j].containsLetter(letterChoice))
 				{
-					potentialSearchdleAnswers.erase(potentialSearchdleAnswers.begin() + j);
+					temp.push_back(potentialSearchdleAnswers[j]);
 				}
 			}
-			std::cout << "No. of potential answers: " << potentialSearchdleAnswers.size() << std::endl;
+			potentialSearchdleAnswers = temp;
+			checkSearchdleAnswer();
 			break;
 		}
 		case 4:
@@ -297,6 +308,26 @@ void ExtendedDictionary::printSearchdleAnswer()
 	potentialSearchdleAnswers[0].printWordNameOnly();
 }
 
+void ExtendedDictionary::checkSearchdleAnswer()
+{
+	if (potentialSearchdleAnswers.size() == 1)
+	{
+		std::cout << "Answer found!" << std::endl;
+		potentialSearchdleAnswers[0].printWordNameOnly();
+		return;
+	}
+	else if (potentialSearchdleAnswers.size() == 0)
+	{
+		std::cout << "Sorry, could not find the answer" << std::endl;
+		return;
+	}
+	std::cout << "No. of potential answers: " << potentialSearchdleAnswers.size() << std::endl;
+}
+#pragma endregion SEARCHDLE FUNCTIONS
+
+
+#pragma region SETTERS AND GETTERS
+
 int ExtendedDictionary::getGuessTheFourthWordHighScore()
 {
 	return guessTheFourthWordHighScore;
@@ -306,3 +337,27 @@ void ExtendedDictionary::setGuessTheFourthWordHighScore(int scoreToSet)
 {
 	guessTheFourthWordHighScore = scoreToSet;
 }
+
+bool ExtendedDictionary::getSearchdleRunning()
+{
+	return searchdleRunning;
+}
+
+void ExtendedDictionary::setSearchdleRunning(bool boolean)
+{
+	searchdleRunning = boolean;
+}
+
+bool ExtendedDictionary::getAnswerFound()
+{
+	return answerFound;
+}
+
+void ExtendedDictionary::setAnswerFound(bool boolean)
+{
+	answerFound = boolean;
+}
+
+#pragma endregion SETTERS AND GETTERS
+
+
