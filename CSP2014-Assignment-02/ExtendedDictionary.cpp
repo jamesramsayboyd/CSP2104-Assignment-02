@@ -111,7 +111,7 @@ void ExtendedDictionary::playGuessTheFourthWord()
 				}
 				else
 				{
-					std::cout << "\nIncorrect!\nYour score was: " << score << "\nReturning to menu\n" << std::endl;
+					std::cout << "\nIncorrect! Answer was \"" << fourthWord << "\"\nYour score was: " << score << "\nReturning to menu\n" << std::endl;
 					gameRunning = false;
 					break;
 				}
@@ -141,12 +141,12 @@ void ExtendedDictionary::playGuessTheFourthWord()
 #pragma region SEARCHDLE FUNCTIONS
 void ExtendedDictionary::cheatAtSearchdle()
 {
+	searchdleRunning = true;
+	answerFound = false;
 	const int MAX_SEARCHDLE_GUESSES = 6;
-	bool gameRunning = true;
-	bool answerFound = false;
 	std::cout << "Cheat at Searchdle" << std::endl;
 
-	while (gameRunning)
+	while (searchdleRunning)
 	{
 		std::cout << "Press 1 to find the current word" << std::endl;
 		std::cout << "Press 2 to view Searchdle instructions" << std::endl;
@@ -164,7 +164,7 @@ void ExtendedDictionary::cheatAtSearchdle()
 				std::cout << "Number of possible answers: " << wordList.size() << std::endl;
 				std::cout << "Enter number of letters: " << std::endl;
 				int wordLength = checkForValidIntInput(10);
-				trimSearchdleAnswerSize(wordLength);
+				trimSearchdleAnswerPool(wordLength);
 
 				std::cout << "Number of possible answers: " << potentialSearchdleAnswers.size() << std::endl;
 
@@ -193,7 +193,9 @@ void ExtendedDictionary::cheatAtSearchdle()
 						}
 						case 3:
 							std::cout << "Returning to menu" << std::endl;
-							gameRunning = false;
+							running = false;
+							answerFound = true;
+							searchdleRunning = false;
 							break;
 						}
 					}
@@ -210,7 +212,7 @@ void ExtendedDictionary::cheatAtSearchdle()
 		case 3:
 		{
 			std::cout << "Returning to menu\n" << std::endl;
-			gameRunning = false;
+			searchdleRunning = false;
 			break;
 		}
 		default:
@@ -291,7 +293,8 @@ void ExtendedDictionary::inputSearchdleGuess(int wordLength)
 		case 4:
 		{
 			std::cout << "Returning to previous menu" << std::endl;
-			return;
+			answerFound = true;
+			searchdleRunning = false;
 			break;
 		}
 		default:
@@ -314,11 +317,13 @@ void ExtendedDictionary::checkSearchdleAnswer()
 	{
 		std::cout << "Answer found!" << std::endl;
 		potentialSearchdleAnswers[0].printWordNameOnly();
+		answerFound = true;
 		return;
 	}
 	else if (potentialSearchdleAnswers.size() == 0)
 	{
-		std::cout << "Sorry, could not find the answer" << std::endl;
+		std::cout << "Sorry, answer does not exist in this dictionary" << std::endl;
+		searchdleRunning = false;
 		return;
 	}
 	std::cout << "No. of potential answers: " << potentialSearchdleAnswers.size() << std::endl;

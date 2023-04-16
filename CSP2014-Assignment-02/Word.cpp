@@ -71,6 +71,7 @@ void Word::printDefinitionMinusFourthWord() // TODO: Work on incrementing i once
 		if (definition[i] == ' ')
 		{
 			spaceCounter++;
+			i++;
 		}
 		if (spaceCounter > 2 && spaceCounter < 4)
 		{
@@ -140,6 +141,7 @@ bool Word::guessFourthWordEligible()
 }
 
 // Setter/Getter implementation
+#pragma region SETTERS AND GETTERS
 std::string Word::getName()
 {
 	return name;
@@ -191,6 +193,9 @@ std::string Word::getFourthWordOfDefinition() // TODO: Working, but make it bett
 	int spaceCounter = 0;
 	int fourthWordStartIndex = 0;
 	int fourthWordEndIndex = 0;
+	int wordLength = 0;
+	std::string fourthWord = "";
+
 	for (int i = 0; i < definition.length(); i++)
 	{
 		if (definition[i] == ' ')
@@ -200,26 +205,16 @@ std::string Word::getFourthWordOfDefinition() // TODO: Working, but make it bett
 		if (spaceCounter == 3)
 		{
 			fourthWordStartIndex = i + 1;
-			break;
-		}
-	}
-	std::string defCopy = definition.substr(fourthWordStartIndex, definition.length());
-	spaceCounter = 0;
-	for (int i = 0; i < defCopy.length(); i++)
-	{
-		if (defCopy[i] == ' ')
-		{
 			spaceCounter++;
 		}
-		if (spaceCounter == 1)
+		if (spaceCounter == 5)
 		{
 			fourthWordEndIndex = i;
-			break;
+			wordLength = fourthWordEndIndex - fourthWordStartIndex;
+			fourthWord = definition.substr(fourthWordStartIndex, wordLength);
+			return fourthWord;
 		}
 	}
-	defCopy = defCopy.substr(0, fourthWordEndIndex);
-	return defCopy;
-	//return definition.substr(fourthWordStartIndex, fourthWordEndIndex);
 }
 
 bool Word::getValidSearchdleAnswer()
@@ -232,3 +227,5 @@ void Word::setValidSearchdleAnswer(bool boolean)
 {
 	validSearchdleAnswer = boolean;
 }
+
+#pragma endregion SETTERS AND GETTERS
