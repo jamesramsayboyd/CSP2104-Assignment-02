@@ -139,8 +139,9 @@ void ExtendedDictionary::playGuessTheFourthWord()
 
 void ExtendedDictionary::cheatAtSearchdle()
 {
-	std::vector<Word> possibleAnswers = wordList;
+	const int MAX_SEARCHDLE_GUESSES = 6;
 	bool gameRunning = true;
+	bool answerFound = false;
 	std::cout << "Cheat at Searchdle" << std::endl;
 
 	while (gameRunning)
@@ -155,48 +156,36 @@ void ExtendedDictionary::cheatAtSearchdle()
 		{
 		case 1:
 		{
-			std::cout << "Number of possible answers: " << possibleAnswers.size() << std::endl;
-			std::cout << "Enter number of letters: " << std::endl;
-			int wordLength = checkForValidIntInput(10);
-			for (int i = possibleAnswers.size() - 1; i > 0; i--)
+			answerFound = false;
+			while (!answerFound)
 			{
-				if (possibleAnswers[i].getName().length() != wordLength)
-				{
-					possibleAnswers.pop_back();
-				}
-			}
+				std::cout << "Number of possible answers: " << wordList.size() << std::endl;
+				std::cout << "Enter number of letters: " << std::endl;
+				int wordLength = checkForValidIntInput(10);
+				trimSearchdleAnswerSize(wordLength);
 
-			std::cout << "Number of possible answers: " << possibleAnswers.size() << std::endl;
-			std::cout << "Enter all grey letters" << std::endl;
-			std::cin >> greyLetters;
+				std::cout << "Number of possible answers: " << potentialSearchdleAnswers.size() << std::endl;
 
-			for (int i = 0; i < greyLetters.length(); i++)
-			{
-				for (int j = 0; j < possibleAnswers.size(); j++)
+				for (int i = 0; i < MAX_SEARCHDLE_GUESSES; i++)
 				{
-					if (!possibleAnswers[j].containsLetter(greyLetters[i]))
+					std::cout << "Guess #" << i + 1 << ":" << std::endl;
+					inputSearchdleGuess(wordLength);
+					std::cout << std::endl;
+					if (potentialSearchdleAnswers.size() == 1)
 					{
-						possibleAnswers.erase(possibleAnswers.begin() + j);
-						//j--;
+						std::cout << "Answer found!" << std::endl;
+						potentialSearchdleAnswers[0].printWordNameOnly();
+						answerFound = true;
+						break;
+					}
+					else if (potentialSearchdleAnswers.size() == 0)
+					{
+						std::cout << "Sorry, could not find answer in dictionary" << std::endl;
+						answerFound = true;
+						break;
 					}
 				}
 			}
-			std::cout << "Number of answers: " << possibleAnswers.size() << std::endl;
-
-			std::cout << "Enter all yellow letters" << std::endl;
-			std::cin >> yellowLetters;
-
-			for (int i = 0; i < possibleAnswers.size(); i++)
-			{
-				for (char x : yellowLetters)
-				{
-					if (!possibleAnswers[i].containsLetter(x))
-					{
-						possibleAnswers.erase(possibleAnswers.begin() + i);
-					}
-				}
-			}
-			std::cout << "Number of answers: " << possibleAnswers.size() << std::endl;
 			break;
 		}
 		case 2:
@@ -214,7 +203,98 @@ void ExtendedDictionary::cheatAtSearchdle()
 			break;
 		}
 	}
+}
 
+void ExtendedDictionary::trimSearchdleAnswerSize(int wordLength)
+{
+	std::vector<Word> temp;
+	for (int i = 0; i < wordList.size(); i++)
+	{
+		if (wordList[i].getName().length() == wordLength)
+		{
+			temp.push_back(wordList[i]);
+		}
+	}
+	potentialSearchdleAnswers = temp;
+}
+
+void ExtendedDictionary::inputSearchdleGuess(int wordLength)
+{
+	int colourChoice = 0;
+	char letterChoice = ' ';
+	for (int i = 0; i < wordLength; i++)
+	{
+		std::cout << "Letter #" << i + 1 << ": " << std::endl;
+		std::cout << "Colour:  1. Green  2. Yellow  3: Grey  (4: Exit)" << std::endl;
+		colourChoice = checkForValidIntInput(4);
+		std::cout << "Letter: " << std::endl;
+		std::cin >> letterChoice;
+
+		switch (colourChoice)
+		{
+		case 1:
+		{
+			/*for (int j = 0; j < potentialSearchdleAnswers.size(); j++)
+			{
+				std::vector<Word> temp;
+				if (!potentialSearchdleAnswers[j].containsLetterAtIndex(letterChoice, i))
+				{
+					temp.push_back(potentialSearchdleAnswers[j]);
+				}
+				potentialSearchdleAnswers = temp;
+			}*/
+			for (int j = potentialSearchdleAnswers.size() - 1; j >= 0; j--)
+			{
+				if (!potentialSearchdleAnswers[j].containsLetterAtIndex(letterChoice, i))
+				{
+					potentialSearchdleAnswers.erase(potentialSearchdleAnswers.begin() + j);
+				}
+			}
+			std::cout << "No. of potential answers: " << potentialSearchdleAnswers.size() << std::endl;
+			break;
+		}
+		case 2:
+		{
+			for (int j = potentialSearchdleAnswers.size() - 1; j >= 0; j--)
+			{
+				if (!potentialSearchdleAnswers[j].containsLetter(letterChoice))
+				{
+					potentialSearchdleAnswers.erase(potentialSearchdleAnswers.begin() + j);
+				}
+			}
+			std::cout << "No. of potential answers: " << potentialSearchdleAnswers.size() << std::endl;
+			break;
+		}
+		case 3:
+		{
+			for (int j = potentialSearchdleAnswers.size() - 1; j >= 0; j--)
+			{
+				if (potentialSearchdleAnswers[j].containsLetter(letterChoice))
+				{
+					potentialSearchdleAnswers.erase(potentialSearchdleAnswers.begin() + j);
+				}
+			}
+			std::cout << "No. of potential answers: " << potentialSearchdleAnswers.size() << std::endl;
+			break;
+		}
+		case 4:
+		{
+			std::cout << "Returning to previous menu" << std::endl;
+			return;
+			break;
+		}
+		default:
+		{
+			break;
+		}
+		}
+	}
+}
+
+void ExtendedDictionary::printSearchdleAnswer()
+{
+	std::cout << "Answer found!" << std::endl;
+	potentialSearchdleAnswers[0].printWordNameOnly();
 }
 
 int ExtendedDictionary::getGuessTheFourthWordHighScore()
