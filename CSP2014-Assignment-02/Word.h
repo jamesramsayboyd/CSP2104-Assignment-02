@@ -30,7 +30,8 @@ public:
 	void printDefinitionMinusFourthWord();
 	bool isPalindrome();
 	bool guessFourthWordEligible();
-	bool containsSpecificLetter(char);
+	bool containsLetter(char);
+	bool containsLetterAtIndex(char, int);
 
 
 	// Setter/Getter method declaration

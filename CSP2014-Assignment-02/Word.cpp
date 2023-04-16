@@ -101,7 +101,7 @@ bool Word::isPalindrome()
 	}
 }
 
-bool Word::containsSpecificLetter(char targetLetter)
+bool Word::containsLetter(char targetLetter)
 {
 	for (char x : name)
 	{
@@ -109,6 +109,15 @@ bool Word::containsSpecificLetter(char targetLetter)
 		{
 			return true;
 		}
+	}
+	return false;
+}
+
+bool Word::containsLetterAtIndex(char targetLetter, int index)
+{
+	if (name[index] == targetLetter)
+	{
+		return true;
 	}
 	return false;
 }

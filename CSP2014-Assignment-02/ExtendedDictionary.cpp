@@ -29,7 +29,7 @@ void ExtendedDictionary::displayPalindromes()
 void ExtendedDictionary::findRhymingWords(std::string wordToRhyme)
 {
 	std::cout << "Displaying all words that rhyme with \"" << wordToRhyme << "\":" << std::endl;
-	int wordLength = wordToRhyme.length();
+	size_t wordLength = wordToRhyme.length();
 	std::string rhymeTarget = "";
 	if (wordLength < 3)
 	{
@@ -155,32 +155,33 @@ void ExtendedDictionary::cheatAtSearchdle()
 		{
 		case 1:
 		{
-			std::cout << "Number of words: " << possibleAnswers.size() << std::endl;
+			std::cout << "Number of possible answers: " << possibleAnswers.size() << std::endl;
+			std::cout << "Enter number of letters: " << std::endl;
+			int wordLength = checkForValidIntInput(10);
+			for (int i = possibleAnswers.size() - 1; i > 0; i--)
+			{
+				if (possibleAnswers[i].getName().length() != wordLength)
+				{
+					possibleAnswers.pop_back();
+				}
+			}
+
+			std::cout << "Number of possible answers: " << possibleAnswers.size() << std::endl;
 			std::cout << "Enter all grey letters" << std::endl;
 			std::cin >> greyLetters;
-
-			/*for (int i = 0; i < possibleAnswers.size(); i++)
-			{
-				for (int j = 0; j < greyLetters.length(); j++)
-				{
-					if (!possibleAnswers[i].containsSpecificLetter(greyLetters[j]))
-					{
-						possibleAnswers.erase(possibleAnswers.begin() + i);
-					}
-				}
-			}*/
 
 			for (int i = 0; i < greyLetters.length(); i++)
 			{
 				for (int j = 0; j < possibleAnswers.size(); j++)
 				{
-					if (!possibleAnswers[j].containsSpecificLetter(greyLetters[i]))
+					if (!possibleAnswers[j].containsLetter(greyLetters[i]))
 					{
 						possibleAnswers.erase(possibleAnswers.begin() + j);
+						//j--;
 					}
 				}
 			}
-			std::cout << "Number of words: " << possibleAnswers.size() << std::endl;
+			std::cout << "Number of answers: " << possibleAnswers.size() << std::endl;
 
 			std::cout << "Enter all yellow letters" << std::endl;
 			std::cin >> yellowLetters;
@@ -189,13 +190,13 @@ void ExtendedDictionary::cheatAtSearchdle()
 			{
 				for (char x : yellowLetters)
 				{
-					if (!possibleAnswers[i].containsSpecificLetter(x))
+					if (!possibleAnswers[i].containsLetter(x))
 					{
 						possibleAnswers.erase(possibleAnswers.begin() + i);
 					}
 				}
 			}
-			std::cout << "Number of words: " << possibleAnswers.size() << std::endl;
+			std::cout << "Number of answers: " << possibleAnswers.size() << std::endl;
 			break;
 		}
 		case 2:

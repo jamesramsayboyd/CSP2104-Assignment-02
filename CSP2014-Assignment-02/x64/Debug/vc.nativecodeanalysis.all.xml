@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?><DEFECTS><DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\</FILEPATH>
+      <FILENAME>ExtendedDictionary.cpp</FILENAME>
+      <LINE>41</LINE>
+      <COLUMN>46</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '-' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '-' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>ExtendedDictionary::findRhymingWords</FUNCTION>
+    <DECORATED>?findRhymingWords@ExtendedDictionary@@QEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z</DECORATED>
+    <FUNCLINE>29</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT></DEFECTS>

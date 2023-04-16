@@ -7,7 +7,7 @@ class ExtendedDictionary :
     public Dictionary
 {
 private:
-    int guessTheFourthWordHighScore;
+    int guessTheFourthWordHighScore = 0;
     std::string greyLetters;
     std::string yellowLetters;
     std::string greenLetters;
