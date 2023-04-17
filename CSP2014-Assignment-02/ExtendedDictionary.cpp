@@ -46,10 +46,14 @@ void ExtendedDictionary::findRhymingWords(std::string wordToRhyme)
 		if (word.getLastThreeLetters() == rhymeTarget)
 		{
 			rhymeCounter++;
-			word.printDefinition();
-			std::cout << std::endl;
+			std::cout << word.getName() << ", ";
+			if (rhymeCounter % 10 == 0)
+			{
+				std::cout << std::endl;
+			}
 		}
 	}
+	std::cout << std::endl;
 	if (rhymeCounter < 1)
 	{
 		std::cout << "ERROR: No rhyming words found" << std::endl;
@@ -126,7 +130,7 @@ void ExtendedDictionary::playGuessTheFourthWord()
 		}
 		case 3:
 		{
-			std::cout << "Returning to menu\n" << std::endl;
+			std::cout << "Returning to menu" << std::endl;
 			gameRunning = false;
 			break;
 		}
@@ -141,6 +145,7 @@ void ExtendedDictionary::playGuessTheFourthWord()
 #pragma region SEARCHDLE FUNCTIONS
 void ExtendedDictionary::cheatAtSearchdle()
 {
+	startOfSearchdleGame:
 	searchdleRunning = true;
 	answerFound = false;
 	const int MAX_SEARCHDLE_GUESSES = 6;
@@ -148,6 +153,7 @@ void ExtendedDictionary::cheatAtSearchdle()
 
 	while (searchdleRunning)
 	{
+		std::cout << std::endl;
 		std::cout << "Press 1 to find the current word" << std::endl;
 		std::cout << "Press 2 to view Searchdle instructions" << std::endl;
 		std::cout << "Press 3 to exit the game" << std::endl;
@@ -199,19 +205,27 @@ void ExtendedDictionary::cheatAtSearchdle()
 							break;
 						}
 					}
-					std::cout << std::endl;
+					//std::cout << std::endl;
 				}
 			}
 			break;
 		}
 		case 2:
 		{
-			std::cout << "Searchdle gives you six chances to guess a randomly generated word. etc etc" << std::endl;
+			std::cout << "Searchdle gives you six chances to guess a randomly generated word. When you enter a word as\n"
+				"a guess, each letter in the word will be highlighted in a colour: Grey means that letter is\n"
+				"not in the target word, Yellow means the letter is present in the target word but in a different\n"
+				"position, and Green means you've guessed a letter and position correctly. To use this program,\n"
+				"make your first guess in Searchdle and then input your results here when prompted, entering each\n"
+				"letter and its colour using the numbered option menus. The program will narrow down the list of\n"
+				"possible options with each letter entered until only one word remains: the target word!\n\n"
+				"After each full word you can ask for a hint, in which case a word will be randomly selected from\n"
+				"the list of possible answers for you to enter as your next guess." << std::endl;
 			break;
 		}
 		case 3:
 		{
-			std::cout << "Returning to menu\n" << std::endl;
+			std::cout << "Returning to menu" << std::endl;
 			searchdleRunning = false;
 			break;
 		}

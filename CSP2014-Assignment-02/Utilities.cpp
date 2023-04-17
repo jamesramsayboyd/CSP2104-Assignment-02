@@ -29,5 +29,6 @@ int checkForValidIntInput(int max)
 
 int generateRandomNumber(int max)
 {
+	srand((unsigned)time(NULL));
 	return rand() % max;
 }
