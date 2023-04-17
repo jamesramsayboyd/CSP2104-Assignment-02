@@ -101,13 +101,14 @@ void ExtendedDictionary::playGuessTheFourthWord()
 
 		switch (userChoice)
 		{
-		case 1:
+		case 1: // user initiates a new game of Guess The Fourth Word
 		{
 			while (true) 
 			{
 				int eligibleIndex = 0;
 				while (true)
 				{
+					// Randomly choose a word from the dictionary with a definition of more than 4 words
 					int random = generateRandomNumber(wordList.size());
 					if (wordList[random].guessFourthWordEligible())
 					{
@@ -118,14 +119,14 @@ void ExtendedDictionary::playGuessTheFourthWord()
 				Word wordToPlay = wordList[eligibleIndex];
 				std::string fourthWord = wordToPlay.getFourthWordOfDefinition();
 				std::cout << "Word: " << wordToPlay.getName() << std::endl;
-				wordToPlay.printDefinitionMinusFourthWord();
+				wordToPlay.printDefinitionMinusFourthWord(); // Print word and definition with fourth word blank
 				std::cout << "\nGuess The Fourth Word!" << std::endl;
 				std::string userGuess;
 				std::cin >> userGuess;
 
-				if (userGuess == fourthWord)
+				if (userGuess == fourthWord) // user guesses word correctly
 				{
-					std::cout << "Correct!\n10 points awarded, beginning new game:\n" << std::endl;
+					std::cout << "Congratulations!\n10 points awarded, beginning new game:\n" << std::endl;
 					score += 10;
 					if (score > getGuessTheFourthWordHighScore())
 					{
@@ -133,7 +134,7 @@ void ExtendedDictionary::playGuessTheFourthWord()
 						setGuessTheFourthWordHighScore(score);
 					}
 				}
-				else
+				else // user guesses wrong
 				{
 					std::cout << "\nIncorrect! Answer was \"" << fourthWord << "\"\nYour score was: " << score << "\nReturning to menu\n" << std::endl;
 					gameRunning = false;
@@ -142,13 +143,13 @@ void ExtendedDictionary::playGuessTheFourthWord()
 			}
 			break;
 		}
-		case 2:
+		case 2: // user asks for instructions
 		{
 			std::cout << "A word will be randomly selected from the dictionary. Guess the fourth word of the\n"
 				"definition correctly to earn 10 points. An incorrect guess will end the game.\n" << std::endl;
 			break;
 		}
-		case 3:
+		case 3: // user exits the game
 		{
 			std::cout << "Returning to menu" << std::endl;
 			gameRunning = false;
@@ -177,10 +178,10 @@ void ExtendedDictionary::playGuessTheFourthWord()
 */
 void ExtendedDictionary::cheatAtSearchdle()
 {
-	startOfSearchdleGame:
 	searchdleRunning = true;
 	answerFound = false;
 	const int MAX_SEARCHDLE_GUESSES = 6;
+	const int MAX_SEARCHDLE_WORD_SIZE = 12;
 	std::cout << "Cheat at Searchdle" << std::endl;
 
 	while (searchdleRunning)
@@ -201,47 +202,49 @@ void ExtendedDictionary::cheatAtSearchdle()
 			{
 				std::cout << "Number of possible answers: " << wordList.size() << std::endl;
 				std::cout << "Enter number of letters: " << std::endl;
-				int wordLength = checkForValidIntInput(10);
+				int wordLength = checkForValidIntInput(MAX_SEARCHDLE_WORD_SIZE);
 				trimSearchdleAnswerPool(wordLength);
 
+				// User is kept updated as the pool of potential answers shrinks
 				std::cout << "Number of possible answers: " << potentialSearchdleAnswers.size() << std::endl;
 
-				for (int i = 0; i < MAX_SEARCHDLE_GUESSES; i++)
+				for (int i = 0; i < MAX_SEARCHDLE_GUESSES; i++) // Repeat six times for six guesses
 				{
 					std::cout << "Guess #" << i + 1 << ":" << std::endl;
-					inputSearchdleGuess(wordLength);
+					if (inputSearchdleGuess(wordLength) == 1)
+					{
+						std::cout << "Returning to main menu" << std::endl;
+						return;
+					}
 					std::cout << std::endl;
 					bool running = true;
-					while (running)
+					while (running) // After each guess user is offered a hint or the chance to exit
 					{
-						std::cout << "1. Continue guessing  2. Ask for a hint  3. Exit" << std::endl;
+						std::cout << "1. Continue guessing  2. Ask for a hint  3. Abandon game" << std::endl;
 						int userChoice = checkForValidIntInput(3);
 						switch (userChoice)
 						{
-						case 1:
+						case 1: // User continues to the next guess of the game
 						{
 							running = false;
 							break;
 						}
-						case 2:
+						case 2: // User asks for a hint
 						{
 							int index = generateRandomNumber(potentialSearchdleAnswers.size());
 							std::cout << "Try \"" << potentialSearchdleAnswers[index].getName() << "\"" << std::endl;
 							break;
 						}
-						case 3:
+						case 3: // User chooses to exit
 							std::cout << "Returning to menu" << std::endl;
-							running = false;
-							answerFound = true;
-							searchdleRunning = false;
-							break;
+							return;
 						}
 					}
 				}
 			}
 			break;
 		}
-		case 2:
+		case 2: // user chooses to see Searchdle instructions
 		{
 			std::cout << "Searchdle gives you six chances to guess a randomly generated word. When you enter a word as\n"
 				"a guess, each letter in the word will be highlighted in a colour: Grey means that letter is\n"
@@ -254,9 +257,9 @@ void ExtendedDictionary::cheatAtSearchdle()
 				"the list of possible answers for you to enter as your next guess." << std::endl;
 			break;
 		}
-		case 3:
+		case 3: // user exits the operation
 		{
-			std::cout << "Returning to menu" << std::endl;
+			std::cout << "Returning to main menu" << std::endl;
 			searchdleRunning = false;
 			break;
 		}
@@ -293,71 +296,84 @@ void ExtendedDictionary::trimSearchdleAnswerPool(int wordLength)
 * User is prompted to enter each letter of their Searchdle guess, one by one, specifying the colour
 * of each letter. I have implemented the three conditions as follows:
 * - Grey letters mean that all words in the dictionary containing that letter should be discarded
-* - Yellow letters mean that all words with that letter in that specific position should be discarded
+* - Yellow letters mean that the letter must be present, but all words with that letter in that 
+*   specific position should be discarded
 * - Green letters mean that all words with that letter in that specific position should be kept
+* Returns 1 when the word is found or deemed not to exist in the dictionary
 */
-void ExtendedDictionary::inputSearchdleGuess(int wordLength)
+int ExtendedDictionary::inputSearchdleGuess(int wordLength)
 {
 	int colourChoice = 0;
 	char letterChoice = ' ';
 	for (int i = 0; i < wordLength; i++)
 	{
 		std::cout << "Letter #" << i + 1 << ": " << std::endl;
-		std::cout << "Colour:  1. Green  2. Yellow  3: Grey  (4: Exit)" << std::endl;
-		colourChoice = checkForValidIntInput(4);
 		std::cout << "Letter: " << std::endl;
-		std::cin >> letterChoice;
+		letterChoice = checkForValidCharInput();
+		std::cout << "Colour:  1. Green  2. Yellow  3: Grey  (4: Abandon game)" << std::endl;
+		colourChoice = checkForValidIntInput(4);
 
 		switch (colourChoice)
 		{
-		case 1:
+		case 1: // Green letter
 		{
 			std::vector<Word> temp;
 			for (int j = 0; j < potentialSearchdleAnswers.size(); j++)
 			{
+				// keep only words that contain the specified letter at the specified index
 				if (potentialSearchdleAnswers[j].containsLetterAtIndex(letterChoice, i))
 				{
 					temp.push_back(potentialSearchdleAnswers[j]);
 				}
 			}
 			potentialSearchdleAnswers = temp;
-			checkSearchdleAnswer();
+			if (checkSearchdleAnswer() > 0)
+			{
+				return 1;
+			}
 			break;
 		}
-		case 2:
+		case 2: // Yellow letter
 		{
 			std::vector<Word> temp;
 			for (int j = 0; j < potentialSearchdleAnswers.size(); j++)
 			{
-				if (!potentialSearchdleAnswers[j].containsLetterAtIndex(letterChoice, i))
+				// keep only words that contain the letter, but discard ones that have it at the specified index
+				if (!potentialSearchdleAnswers[j].containsLetterAtIndex(letterChoice, i)
+					&& potentialSearchdleAnswers[j].containsLetter(letterChoice))
 				{
 					temp.push_back(potentialSearchdleAnswers[j]);
 				}
 			}
 			potentialSearchdleAnswers = temp;
-			checkSearchdleAnswer();
+			if (checkSearchdleAnswer() > 0)
+			{
+				return 1;
+			}
 			break;
 		}
-		case 3:
+		case 3:// Grey letter
 		{
 			std::vector<Word> temp;
 			for (int j = 0; j < potentialSearchdleAnswers.size(); j++)
 			{
+				// discard all words that contain the specified letter
 				if (!potentialSearchdleAnswers[j].containsLetter(letterChoice))
 				{
 					temp.push_back(potentialSearchdleAnswers[j]);
 				}
 			}
 			potentialSearchdleAnswers = temp;
-			checkSearchdleAnswer();
+			if (checkSearchdleAnswer() > 0)
+			{
+				return 1;
+			}
 			break;
 		}
 		case 4:
 		{
-			std::cout << "Returning to previous menu" << std::endl;
-			answerFound = true;
-			searchdleRunning = false;
-			break;
+			std::cout << "Returning to main menu" << std::endl;
+			return 1;
 		}
 		default:
 		{
@@ -369,24 +385,24 @@ void ExtendedDictionary::inputSearchdleGuess(int wordLength)
 
 /* James Boyd, Student ID: 10629572, 16/04/2023
 * Checks whether the answer has been found (i.e. 1 potential word) or cannot be found (i.e. 0 potential
-* words). If answer is found, user is informed and current game ends
+* words). If answer is found, user is informed and current game ends. Returns 1 when word is found, 
+* returns 0 when word is deemed not to be in dictionary
 */
-void ExtendedDictionary::checkSearchdleAnswer()
+int ExtendedDictionary::checkSearchdleAnswer()
 {
 	if (potentialSearchdleAnswers.size() == 1)
 	{
 		std::cout << "Answer found!" << std::endl;
 		potentialSearchdleAnswers[0].printWordNameOnly();
-		answerFound = true;
-		return;
+		return 1;
 	}
 	else if (potentialSearchdleAnswers.size() == 0)
 	{
 		std::cout << "Sorry, answer does not exist in this dictionary" << std::endl;
-		searchdleRunning = false;
-		return;
+		return 2;
 	}
 	std::cout << "No. of potential answers: " << potentialSearchdleAnswers.size() << std::endl;
+	return 0;
 }
 #pragma endregion SEARCHDLE FUNCTIONS
 

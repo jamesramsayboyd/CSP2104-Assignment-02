@@ -7,6 +7,7 @@
 
 bool checkMaxMinLimit(int, int);
 int checkForValidIntInput(int);
+char checkForValidCharInput();
 int generateRandomNumber(int);
 
 #endif

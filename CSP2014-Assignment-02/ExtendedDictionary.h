@@ -20,8 +20,8 @@ public:
     void playGuessTheFourthWord();
     void cheatAtSearchdle();
     void trimSearchdleAnswerPool(int wordLength);
-    void inputSearchdleGuess(int);
-    void checkSearchdleAnswer();
+    int inputSearchdleGuess(int);
+    int checkSearchdleAnswer();
 
     int getGuessTheFourthWordHighScore();
     void setGuessTheFourthWordHighScore(int);
