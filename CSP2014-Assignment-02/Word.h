@@ -1,17 +1,6 @@
-//#pragma once
-#ifndef WORD_H
-#define WORD_H
+#pragma once
 
 #include <string>
-
-/* James Boyd, Student ID: 10629572, 13/4/2023
-A class storing the details of a word from a dictionary file provided by the
-user. The class has three properties, all of type String: name, type and definition.
-There are no methods. */
-//struct Word
-//{
-//	std::string name, type, definition;
-//};
 
 // Declaration section
 class Word
@@ -46,4 +35,3 @@ public:
 	bool getValidSearchdleAnswer();
 	void setValidSearchdleAnswer(bool);
 };
-#endif

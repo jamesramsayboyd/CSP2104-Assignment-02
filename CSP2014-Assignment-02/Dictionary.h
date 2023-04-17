@@ -1,6 +1,4 @@
-//#pragma once
-#ifndef DICTIONARY_H
-#define DICTIONARY_H
+#pragma once
 
 #include <vector>
 #include <string>
@@ -29,4 +27,3 @@ public:
 	void getFullWordDetails(int);
 	int getWordCount();
 };
-#endif

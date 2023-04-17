@@ -1,7 +1,16 @@
-﻿  ExtendedDictionary.cpp
+﻿  CSP2014-Assignment-02.cpp
+  Dictionary.cpp
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\Dictionary.cpp(267,30): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  ExtendedDictionary.cpp
 C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\ExtendedDictionary.cpp(51,47): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\ExtendedDictionary.cpp(111,55): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\ExtendedDictionary.cpp(233,73): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\ExtendedDictionary.cpp(180,2): warning C4102: 'startOfSearchdleGame': unreferenced label
-C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\ExtendedDictionary.cpp(382): warning C4715: 'ExtendedDictionary::inputSearchdleGuess': not all control paths return a value
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\ExtendedDictionary.cpp(112,55): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\ExtendedDictionary.cpp(234,73): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Word.cpp
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\Word.cpp(105,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\Word.cpp(227,32): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\Word.cpp(234,40): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\Word.cpp(272): warning C4715: 'Word::getFourthWordOfDefinition': not all control paths return a value
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\ExtendedDictionary.cpp(384): warning C4715: 'ExtendedDictionary::inputSearchdleGuess': not all control paths return a value
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\Dictionary.cpp(208): warning C4715: 'Dictionary::searchWord': not all control paths return a value
   CSP2014-Assignment-02.vcxproj -> C:\Users\James\Documents\GitHub\CSP2104-Assignment-02\CSP2014-Assignment-02\x64\Debug\CSP2014-Assignment-02.exe

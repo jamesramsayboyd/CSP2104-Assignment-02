@@ -215,9 +215,9 @@ int Dictionary::searchWord(std::string wordToSearch)
 void Dictionary::findThreeZs()
 {
 	std::cout << "Displaying all words containing more than three 'z' characters: " << std::endl;
-	int zCounter = 0;
 	for (Word word : wordList)
 	{
+		int zCounter = 0;
 		for (char y : word.getName())
 		{
 			if (y == 'z')
@@ -229,10 +229,6 @@ void Dictionary::findThreeZs()
 		{
 			word.printDefinition();
 		}
-	}
-	if (zCounter == 0)
-	{
-		std::cout << "ERROR: No matching words found" << std::endl;
 	}
 }
 
