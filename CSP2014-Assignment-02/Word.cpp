@@ -12,11 +12,19 @@ Word::Word(std::string nameToSet, std::string typeToSet, std::string definitionT
 }
 
 // Method implementation
+/* James Boyd, Student ID: 10629572, 11/04/2023
+* Prints only the name property of the Word
+*/
 void Word::printWordNameOnly()
 {
 	std::cout << name << std::endl;
 }
 
+
+/* James Boyd, Student ID: 10629572, 11/04/2023
+* Prints name, type and definition properties of a Word. Type is formatted as specified in the
+* assignment document (i.e. [noun], [verb], etc)
+*/
 void Word::printDefinition()
 {
 	std::cout << "Word: " << name << std::endl;
@@ -61,7 +69,11 @@ void Word::printDefinition()
 }
 
 
-void Word::printDefinitionMinusFourthWord() // TODO: Work on incrementing i once before doing '_'s
+/* James Boyd, Student ID: 10629572, 15/04/2023
+* Prints a Word's definition property with the fourth word replaced with underscores. This
+* function is used in the 'Guess The Fourth Word' game that runs within the program
+*/
+void Word::printDefinitionMinusFourthWord()
 {
 	int spaceCounter = 0;
 	int fourthWordStartIndex = 0;
@@ -81,10 +93,13 @@ void Word::printDefinitionMinusFourthWord() // TODO: Work on incrementing i once
 	std::cout << definition << std::endl;
 }
 
-// Predicate function identifying whether word is a palindrome, i.e. same spelt
-// backwards or forwards. Function operates by splitting the word into two substrings:
-// index 0 to middle letter (first half of word and index -1 to middle letter (second
-// half of word spelt backwards) and comparing.
+
+/* James Boyd, Student ID: 10629572, 17/04/2023
+* Predicate function identifying whether word is a palindrome, i.e. same spelt
+* backwards or forwards. Function operates by splitting the word into two substrings:
+* index 0 to middle letter (first half of word and index -1 to middle letter (second
+* half of word spelt backwards) and comparing
+*/
 bool Word::isPalindrome()
 {
 	int midpoint = name.length() / 2;
@@ -102,6 +117,12 @@ bool Word::isPalindrome()
 	}
 }
 
+
+/* James Boyd, Student ID: 10629572, 15/04/2023
+* Predicate function identifying whether the name property of a Word contains a certain
+* letter, provided as an argument. This is used in the 'Cheat At Searchdle' option of the
+* main program
+*/
 bool Word::containsLetter(char targetLetter)
 {
 	for (char x : name)
@@ -114,6 +135,12 @@ bool Word::containsLetter(char targetLetter)
 	return false;
 }
 
+
+/* James Boyd, Student ID: 10629572, 15/04/2023
+* Predicate function identifying whether the name property of a Word contains a certain
+* letter at a certain index, both provided as arguments. This is used in the 'Cheat At 
+* Searchdle' option of the main program
+*/
 bool Word::containsLetterAtIndex(char targetLetter, int index)
 {
 	if (name[index] == targetLetter)
@@ -123,6 +150,11 @@ bool Word::containsLetterAtIndex(char targetLetter, int index)
 	return false;
 }
 
+
+/* James Boyd, Student ID: 10629572, 15/04/2023
+* Predicate function identifying whether the Word is eligible for the 'Guess The Fourth
+* Word' game, i.e. whether the dictionary property has at least four words
+*/
 bool Word::guessFourthWordEligible()
 {
 	int spaceCounter = 0;
@@ -140,8 +172,11 @@ bool Word::guessFourthWordEligible()
 	return false;
 }
 
-// Setter/Getter implementation
+
 #pragma region SETTERS AND GETTERS
+/* James Boyd, Student ID: 10629572, 15/04/2023
+* Setters and getters (self explanatory)
+*/
 std::string Word::getName()
 {
 	return name;
@@ -172,6 +207,20 @@ void Word::setDefinition(std::string definitionToSet)
 	this->definition = definitionToSet;
 }
 
+bool Word::getValidSearchdleAnswer()
+{
+	return validSearchdleAnswer;
+}
+
+void Word::setValidSearchdleAnswer(bool boolean)
+{
+	validSearchdleAnswer = boolean;
+}
+
+/* James Boyd, Student ID: 10629572, 15/04/2023
+* Gets the last three letters of a Word's name property. This is used in the 'Find Rhyming Words'
+* operation in the main program
+*/
 std::string Word::getLastThreeLetters()
 {
 	std::string name = this->getName();
@@ -188,7 +237,12 @@ std::string Word::getLastThreeLetters()
 	}
 }
 
-std::string Word::getFourthWordOfDefinition() // TODO: Working, but make it better
+
+/* James Boyd, Student ID: 10629572, 15/04/2023
+* Gets the fourth word of a Word's definition property. This is used in the 'Guess The Fourth
+* Word' game in the main program
+*/
+std::string Word::getFourthWordOfDefinition()
 {
 	int spaceCounter = 0;
 	int fourthWordStartIndex = 0;
@@ -215,17 +269,6 @@ std::string Word::getFourthWordOfDefinition() // TODO: Working, but make it bett
 			return fourthWord;
 		}
 	}
-}
-
-bool Word::getValidSearchdleAnswer()
-{
-	return validSearchdleAnswer;
-}
-
-
-void Word::setValidSearchdleAnswer(bool boolean)
-{
-	validSearchdleAnswer = boolean;
 }
 
 #pragma endregion SETTERS AND GETTERS

@@ -21,8 +21,6 @@ public:
 	bool loadFromFile(std::string);
 	bool saveToFile();
 	bool addWord(std::string);
-	void addWordObject(Word);
-	void deleteWord(std::string);
 	int searchWord(std::string);
 	void findThreeZs();
 

@@ -10,11 +10,23 @@
 Dictionary::Dictionary() {}
 
 // Method Implementation
+/* James Boyd, Student ID: 10629572, 13/04/2023
+* Clears the vector<Word> that holds all Word objects
+*/
 void Dictionary::clear()
 {
 	this->wordList.clear();
 }
 
+
+/* James Boyd, Student ID: 10629572, 13/04/2023
+* Loads Word objects into the vector<Word> from a .txt file. File should be in format:
+<word>
+word name
+word definition
+word type
+</word>
+*/
 bool Dictionary::loadFromFile(std::string filename)
 {
 	this->clear();
@@ -47,6 +59,10 @@ bool Dictionary::loadFromFile(std::string filename)
 }
 
 
+/* James Boyd, Student ID: 10629572, 13/04/2023
+* Loops through vector<Word> and writes the name, type and definition of all Word objects to a
+.txt file specified by the user
+*/
 bool Dictionary::saveToFile()
 {
 	std::string data;
@@ -79,6 +95,11 @@ bool Dictionary::saveToFile()
 }
 
 
+/* James Boyd, Student ID: 10629572, 13/04/2023
+* Adds a word to the dictionary. User is asked to type the word name, this string is searched
+* to ensure the word doesn't already exist in the dictionary. If it does not exist, user is asked
+* for type and definition and a Word object is instantiated and added to the vector<Word>
+*/
 bool Dictionary::addWord(std::string wordToAdd)
 {
 	if (this->searchWord(wordToAdd) < 0)
@@ -143,43 +164,60 @@ bool Dictionary::addWord(std::string wordToAdd)
 }
 
 
-void Dictionary::addWordObject(Word wordObject)
-{
-	wordList.push_back(wordObject);
-}
-
-
-void Dictionary::deleteWord(std::string wordToDelete)
-{
-	int deleteIndex = searchWord(wordToDelete);
-	if (deleteIndex >= 0)
-	{
-		wordList.erase(wordList.begin() + deleteIndex); // TODO: Consider changing searchWord to return vector iterator
-	}
-	else
-	{
-		std::cout << "Error" << std::endl;
-	}
-}
-
+/* James Boyd, Student ID: 10629572, 13/04/2023
+* Searches for a word in the dictionary, implemented as a binary search algorithm. Returns -1 if the word 
+* does not exist, returns the index of the word if it does
+*/
 int Dictionary::searchWord(std::string wordToSearch)
 {
-	for (int i = 0; i < getWordCount(); i++)
+	for (int i = 0; i < wordToSearch.length(); i++)
 	{
-		if (wordList[i].getName() == wordToSearch)
+		wordToSearch[i] = tolower(wordToSearch[i]); // Converting search target to lower case for case-insensitivity
+	}
+	int lowerBound = 0;
+	int upperBound = getWordCount();
+	int mid = 0;
+	bool found = false;
+
+	while (lowerBound < upperBound)
+	{
+		mid = (upperBound + lowerBound) / 2;
+		std::string midWord = wordList[mid].getName();
+		if (!isalpha(midWord[0]))
 		{
-			return i;
+			midWord = midWord.substr(1, -1);
+		}
+		int comparison = (midWord.compare(wordToSearch));
+		if (comparison == 0)
+		{
+			return mid;
+		}
+		else if (comparison < 0)
+		{
+			lowerBound = mid + 1;
+		}
+		else
+		{
+			upperBound = mid;
 		}
 	}
-	return -1;
+	if (!found)
+	{
+		return -1;
+	}
 }
 
+
+/* James Boyd, Student ID: 10629572, 13/04/2023
+* Searches the vector<Word> for any words that contain more than three 'z' characters. Prints the full
+* word details of all matching words, or an error message if none is found
+*/
 void Dictionary::findThreeZs()
 {
 	std::cout << "Displaying all words containing more than three 'z' characters: " << std::endl;
+	int zCounter = 0;
 	for (Word word : wordList)
 	{
-		int zCounter = 0;
 		for (char y : word.getName())
 		{
 			if (y == 'z')
@@ -189,9 +227,12 @@ void Dictionary::findThreeZs()
 		}
 		if (zCounter > 2)
 		{
-			//break; // TODO: Think about this break
 			word.printDefinition();
 		}
+	}
+	if (zCounter == 0)
+	{
+		std::cout << "ERROR: No matching words found" << std::endl;
 	}
 }
 

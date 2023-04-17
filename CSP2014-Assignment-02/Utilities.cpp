@@ -27,6 +27,12 @@ int checkForValidIntInput(int max)
 	return tempData;
 }
 
+
+/* James Boyd, Student ID: 10629572, 16/04/2023
+A function to generate a random integer between 0 and the number provided as an argument.
+Source for the idea of using the current time as a seed value:
+Gangwar, M. (2022, August 4). How to Create a Random Number Generator in C++. Digital Ocean.
+	https://www.digitalocean.com/community/tutorials/random-number-generator-c-plus-plus */
 int generateRandomNumber(int max)
 {
 	srand((unsigned)time(NULL));

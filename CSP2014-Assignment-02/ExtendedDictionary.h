@@ -22,7 +22,6 @@ public:
     void trimSearchdleAnswerPool(int wordLength);
     void inputSearchdleGuess(int);
     void checkSearchdleAnswer();
-    void printSearchdleAnswer();
 
     int getGuessTheFourthWordHighScore();
     void setGuessTheFourthWordHighScore(int);

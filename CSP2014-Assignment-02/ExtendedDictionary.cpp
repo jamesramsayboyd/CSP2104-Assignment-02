@@ -3,6 +3,11 @@
 #include <vector>
 #include "ExtendedDictionary.h"
 
+
+/* James Boyd, Student ID: 10629572, 15/04/2023
+* Loops through the vector<Word> finding all Words where Word.isPalindrome() == true
+* Prints full Word details when found
+*/
 void ExtendedDictionary::displayPalindromes()
 {
 	std::cout << "Displaying all palindromes:" << std::endl;
@@ -26,6 +31,12 @@ void ExtendedDictionary::displayPalindromes()
 	}
 }
 
+
+/* James Boyd, Student ID: 10629572, 13/04/2023
+* Prompts the user to enter a word, then searches for all words where the last three letters match
+* the target word. Displays each word's name property only, as this function generally returns a lot
+* of matches and printing full word details would take too much space
+*/
 void ExtendedDictionary::findRhymingWords(std::string wordToRhyme)
 {
 	std::cout << "Displaying all words that rhyme with \"" << wordToRhyme << "\":" << std::endl;
@@ -64,6 +75,15 @@ void ExtendedDictionary::findRhymingWords(std::string wordToRhyme)
 	}
 }
 
+
+/* James Boyd, Student ID: 10629572, 15/04/2023
+* Initiates the 'Guess The Fourth Word' game. Generates a random number to choose a random word from the
+* dictionary where the definition property has more than four words. The word's name and definition
+* properties are displayed, with the fourth word of the definition replaced with underscores. The user is
+* prompted to guess the fourth word. If their guess is correct, they earn 10 points and the game begins again.
+* If they guess wrong, the game ends and the program returns to the main menu. The highest score is saved as
+* a property of the ExtendedDictionary class and updated when a player beats the score
+*/
 void ExtendedDictionary::playGuessTheFourthWord()
 {
 	int score = 0;	
@@ -143,6 +163,18 @@ void ExtendedDictionary::playGuessTheFourthWord()
 
 
 #pragma region SEARCHDLE FUNCTIONS
+
+/* James Boyd, Student ID: 10629572, 13/04/2023
+* Initiates the 'Cheat At Searchdle' operation. User is first prompted to enter the number of letters in the
+* target word. User must make their first guess in the external Searchdle game, then input their results here 
+* letter by letter, specifying the colour of each letter. The program narrows down the pool of possible answers
+* with each new letter, from the full size of the dictionary down to one single word. User can view a set of
+* instructions if needed, both on how to play Searchdle and how to use this program.
+* 
+* DISCLAIMER: This function is not 100% effective. I've found that the Searchdle game uses a very different
+* dictionary to what is provided in the dictionary_2023S1.txt file, so often the target word in Searchdle simply
+* isn't present in this program's dictionary
+*/
 void ExtendedDictionary::cheatAtSearchdle()
 {
 	startOfSearchdleGame:
@@ -205,7 +237,6 @@ void ExtendedDictionary::cheatAtSearchdle()
 							break;
 						}
 					}
-					//std::cout << std::endl;
 				}
 			}
 			break;
@@ -235,6 +266,15 @@ void ExtendedDictionary::cheatAtSearchdle()
 	}
 }
 
+
+/* James Boyd, Student ID: 10629572, 15/04/2023
+* User is prompted to enter the length of the Searchdle target word, and this is used to trim down the
+* pool of potential answers from the full size of the dictionary to only those words with the correct
+* length. I initially implemented this method by looping through the vector<Word> and using the built-in
+* vector.erase() function to delete non-matching words, but this operation was extremely inefficient. I
+* refactored the method to instead *add* all matching words to a temporary vector<Word>, and then assign
+* this vector<Word> to the original vector<Word> to discard all non-matching words
+*/
 void ExtendedDictionary::trimSearchdleAnswerPool(int wordLength)
 {
 	std::vector<Word> temp;
@@ -248,6 +288,14 @@ void ExtendedDictionary::trimSearchdleAnswerPool(int wordLength)
 	potentialSearchdleAnswers = temp;
 }
 
+
+/* James Boyd, Student ID: 10629572, 16/04/2023
+* User is prompted to enter each letter of their Searchdle guess, one by one, specifying the colour
+* of each letter. I have implemented the three conditions as follows:
+* - Grey letters mean that all words in the dictionary containing that letter should be discarded
+* - Yellow letters mean that all words with that letter in that specific position should be discarded
+* - Green letters mean that all words with that letter in that specific position should be kept
+*/
 void ExtendedDictionary::inputSearchdleGuess(int wordLength)
 {
 	int colourChoice = 0;
@@ -319,12 +367,10 @@ void ExtendedDictionary::inputSearchdleGuess(int wordLength)
 	}
 }
 
-void ExtendedDictionary::printSearchdleAnswer()
-{
-	std::cout << "Answer found!" << std::endl;
-	potentialSearchdleAnswers[0].printWordNameOnly();
-}
-
+/* James Boyd, Student ID: 10629572, 16/04/2023
+* Checks whether the answer has been found (i.e. 1 potential word) or cannot be found (i.e. 0 potential
+* words). If answer is found, user is informed and current game ends
+*/
 void ExtendedDictionary::checkSearchdleAnswer()
 {
 	if (potentialSearchdleAnswers.size() == 1)
